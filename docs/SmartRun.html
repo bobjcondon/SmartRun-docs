@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartRun Machine Learning and GK list reducer &mdash; SmartRun Feature Sets for Machine Learning  0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Jupyter Notebooks" href="Jupyter.html" />
+    <link rel="prev" title="Machine learning test reduction" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SmartRun Feature Sets for Machine Learning 
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SmartRun Machine Learning and GK list reducer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#smartrun">SmartRun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overall-architecture">Overall Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#our-current-features">Our Current features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#our-original-features">Our original features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#going-forward">Going forward</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-smartrun">Running Smartrun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Jupyter.html">Jupyter Notebooks</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SmartRun Feature Sets for Machine Learning </a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SmartRun Machine Learning and GK list reducer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/SmartRun.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="smartrun-machine-learning-and-gk-list-reducer">
+<h1>SmartRun Machine Learning and GK list reducer<a class="headerlink" href="#smartrun-machine-learning-and-gk-list-reducer" title="Link to this heading"></a></h1>
+<p>This document is really just Bob’s notes on issues with exploring
+integrating GK list reducer with the infrastructure used in SmartRun.   They would be in
+OneNote if he was better at working with Microsoft tools.</p>
+<p>The source is markdown in the (somewhat poorly named) <a class="reference external" href="https://github.com/bobjcondon/rylml.git">https://github.com/bobjcondon/rylml.git</a>
+Much of the information is covered in various documents owned by the SmartRun team so this content will
+eventually migrate to there.</p>
+<section id="smartrun">
+<h2>SmartRun<a class="headerlink" href="#smartrun" title="Link to this heading"></a></h2>
+<p>Smartrun uses Machine Learning (ML) to convert a long running testlist
+to a much shorter testlist with similar correctness criteria.</p>
+<p>It is based on work from the software-testing world taking inspiration from this
+work at facebook.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://engineering.fb.com/2018/11/21/developer-tools/predictive-test-selection">Overview</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/1810.05286.pdf">Detailed ACM paper</a></p></li>
+</ul>
+<p>There are lots of ML resources available within Intel.   One place to start is
+<a class="reference external" href="https://intel.sharepoint.com/sites/PESGMachineLearningCOE/SitePages/Machine-Learning-Resources.aspx">PESGMachineLearningCOE</a></p>
+<p>SmartRun maintains its ML material at
+<a class="reference external" href="https://intel.sharepoint.com/sites/pesgtegvalidationmanagement/_layouts/OneNote.aspx?id=%2Fsites%2Fpesgtegvalidationmanagement%2FShared%20Documents%2FMachineLearning%2FMachineLearningonenote:https://intel.sharepoint.com/sites/pesgtegvalidationmanagement/Shared%20Documents/MachineLearning/MachineLearning/">SmartRun OneNote</a></p>
+</section>
+<section id="overall-architecture">
+<h2>Overall Architecture<a class="headerlink" href="#overall-architecture" title="Link to this heading"></a></h2>
+<blockquote>
+<div><p>TODO – insert link here</p>
+</div></blockquote>
+</section>
+<section id="our-current-features">
+<h2>Our Current features<a class="headerlink" href="#our-current-features" title="Link to this heading"></a></h2>
+<p>The full database of our current features can be queried at the “swagger” database
+<a class="reference external" href="https://ml.dv.cheetah.sc.intel.com/db/api/v3.4/index.html">https://ml.dv.cheetah.sc.intel.com/db/api/v3.4/index.html</a></p>
+<p>Basically we have the “join” of the CthFlow, Dut, GitBase, GitCommit, GitFile, Projects, and Rpt Tables</p>
+<ul class="simple">
+<li><p>Information gleaned from Git</p>
+<ul>
+<li><p>git_bases_id</p></li>
+<li><p>git_remote_url</p></li>
+<li><p>git_commits_id</p></li>
+<li><p>rev</p></li>
+<li><p>commit_msg</p></li>
+</ul>
+</li>
+<li><p>How “big” the change was.   We currently use the aggregate across all file changes.
+but we have the data available to us on a file by file basis.   This is a very
+crude estimate of the amount of change.   See future work for why and what we
+plan to do about it.</p>
+<ul>
+<li><p>commit_total_deleted_lines</p></li>
+<li><p>commit_total_added_lines</p></li>
+<li><p>total_edited_lines</p></li>
+</ul>
+</li>
+<li><p>When and who committed the changes in this submission</p>
+<ul>
+<li><p>commit_date</p></li>
+<li><p>commit_author</p></li>
+<li><p>commit_author_date    # I think this ends up being the same as commit date</p></li>
+</ul>
+</li>
+<li><p>model</p></li>
+<li><p>dut</p></li>
+<li><p>seed</p></li>
+<li><p>Test length</p>
+<ul>
+<li><p>date_time_run</p></li>
+<li><p>date_time_end</p></li>
+<li><p>date_time_sec   # (date_time_end - date_time_run) as seconds</p></li>
+</ul>
+</li>
+<li><p>These two fields seem to be duplicates</p>
+<ul>
+<li><p>test_status</p></li>
+<li><p>test_result   # as reported in the RPT file</p></li>
+</ul>
+</li>
+<li><p>The test command line is taken as a long string.   See future work for why this is
+inadequate.</p>
+<ul>
+<li><p>test_cmd_line</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="our-original-features">
+<h2>Our original features<a class="headerlink" href="#our-original-features" title="Link to this heading"></a></h2>
+<p>Originally we included the above but with much more detailed information about the
+per-file changes within the design and the testbench.   We stored information
+(essentially the output of <cite>diff</cite>) for each file changed.   We could use that information
+in conjunction with a verilog parser to produce a much more useful metric of the
+size of the change.    The data involved proved to be excessive for the current
+Splunk implementation to handle.   Removing this measure of the size of the change
+caused the accuracy of our model to deteriorate.</p>
+</section>
+<section id="going-forward">
+<h2>Going forward<a class="headerlink" href="#going-forward" title="Link to this heading"></a></h2>
+<p>Of high importance is restoring the “more accuracy of the diff”.   We have acccess
+to two different Verilog parsers (a python-based “approximate” parser) and the Defacto
+complete verilog parser.   We will use one of these (presumably the DeFacto parser)
+to build “before” and “after” models of the design and extract out features such as</p>
+<ul class="simple">
+<li><p>the overall complexity of the design</p></li>
+<li><p>how many {modules, ports, nets … } were changed.</p></li>
+<li><p>were the changes in testbench code or actual design</p></li>
+</ul>
+<p>We currently preserve the entire trex command line.   We believe we should parse
+it to extract more detailed features (perhaps the union of all the verilog defines).</p>
+</section>
+<section id="running-smartrun">
+<h2>Running Smartrun<a class="headerlink" href="#running-smartrun" title="Link to this heading"></a></h2>
+</section>
+<section id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Bernd – What is the current accuracy of smartrun?   We have presented data showing
+accuracy in the 95+ % range.   Is that using the details of verilog which we
+no longer get due to splunk limitations.</p></li>
+<li><p>Bob to follow up with {Bernd, Thomas, Helge}
+How do we convert file data (list of files changed) to some form of useful
+categorical data?</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Machine learning test reduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Jupyter.html" class="btn btn-neutral float-right" title="Jupyter Notebooks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Bob Condon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
